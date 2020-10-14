@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html  lang="en" xmls="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <script src="js\bootstrap.js"></script>
+    <script src="js\bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="scs\liga.css">
+    <link rel="stylesheet" href="scs\bootstrap.min.css">
+    <link rel="stylesheet" href="scs\bootstrap-grid.css">
+</head>
+<body>
+    <div th:insert="portalArbitro.html">
+    </div>
+    <div class="container">
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#dadosCadastrais">Dados Cadastrais</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#endereco">Endereço</a></li>
+            <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#banco">Conta Bancária</a> </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#documentos">Documentos</a> </li>
+            <li class="nav-item"><a class="nav-link" data-toggle="pill" href="#senha">Mudar Senha</a> </li>
+        </ul>
+
+
+        <div class="tab-content">
+            <div id="dadosCadastrais" class="tab-pane fade in active">
+                <form th:object="${Arbitro}" th:action="@{/cadastroDados}" method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label th:field="nome">Nome</label>
+                            <input type="text" class="form-control" th:field="*{nome}" placeholder="Nome" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label th:field="sobrenome">Sobrenome</label>
+                            <input type="text" class="form-control" th:field="*{sobrenome}" placeholder="Sobrenome" required>
+                        </div>
+                        <div class="form-group">
+                            <label th:field="dataNasc">Data de Nascimento</label>
+                            <input type="text" class="form-control" th:field="*{dataNasc}" placeholder="dd/mm/yyyy" required>
+                        </div>
+                        <div class="form-group">
+                            <label th:field="celular">Telefone Celular</label>
+                            <input type="text" class="form-control" th:field="*{celular}" placeholder="(xx) x xxxxx-xxxx" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label th:field="rg">RG</label>
+                            <input type="text" class="form-control" th:field="*{rg}" placeholder="RG"  required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>CPF</label>
+                            <input type="text" class="form-control" th:field="*{cpf}" placeholder="CPF" required>
+                        </div>
+                        <label>Função</label>
+                        <select th:field="*{funcao}" class="custom-select">
+                            <option value="vazio">Selecione sua função</option>
+                            <option id="Arbitro" value="Arbitro">Árbitro</option>
+                            <option id="ArbitroAssistente" value="ArbitroAssitente">Árbitro Assistente</option>
+                            <option id="QuartoArbitro" value="Quarto Arbitro">4ºÁrbitro</option>
+                        </select>
+                        <label>Disponibilidade</label>
+                        <select th:field="*{disponibilidade}" class="custom-select">
+                            <option value="vazio">Selecione sua disponibilidade</option>
+                            <option value="Todos os dias">Todos os Dias</option>
+                            <option value="Final de Semana">Final de Semana</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Cadastro</button>
+                </form>
+            </div>
+            <div id="endereco" class="tab-pane fade">
+                <form th:object="${endereco}" th:action="@{/cadastroEndereco}" method="post">
+                    <div class="form-group col-md-2">
+                        <label th:field="cep">CEP</label>
+                        <input type="text" class="form-control" th:field="*{cep}" placeholder="CEP">
+                    </div>
+                    <div class="form-group">
+                        <label th:field="endereco">Endereço</label>
+                        <input type="text" class="form-control" th:field="*{endereco}" placeholder="Coloque seu endereço">
+                    </div>
+                    <label th:field="numero">Número</label>
+                    <input type="text" class="form-control" th:field="*{numero}" placeholder="Coloque o número de sua Residência">
+                    <div class="form-group">
+                        <label th:field="complemento">Complemento</label>
+                        <input type="text" class="form-control" th:field="*{complemento}" placeholder="Apartamento, hotel, casa, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label th:field="bairro">Bairro</label>
+                        <input type="text" class="form-control" th:field="*{bairro}" placeholder="Coloque seu bairro">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label th:field="municipio">Município</label>
+                            <input type="text" class="form-control" th:field="*{municipio}" placeholder="Coloque sua cidade">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label >UF</label>
+
+                            <br>
+                            <button type="submit" class="btn btn-primary">Salvar Endereço</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div id="banco" class="tab-pane fade">
+                <form th:object="${banco}" th:action="@{/cadastroBanco}" method="post">
+                    <div class="form-group col-md-4">
+                        <label>Banco</label>
+                        <select th:field="*{nomeBanco}" class="custom-select">
+                            <option value="vazio">Selecione seu banco</option>
+                            <option value="Itau">Itaú</option>
+                        </select>
+                        <div class="form-group">
+                            <label th:field="bancoAgencia">Número da agência</label>
+                            <input type="text" class="form-control" th:field="*{bancoAgencia}">
+                        </div>
+                        <div class="form-group">
+                            <label th:field="nconta">Número da conta</label>
+                            <input type="text" class="form-control" th:field="*{nconta}">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Conta</button>
+                </form>
+
+            </div>
+            <div id="documentos" class="tab-pane fade">
+                <form th:action="@{/cadastroDocuments}" method="post" enctype="multipart/form-data">
+
+                    <div class="custom-file">
+                        <input name="files" type="file" class="custom-file-input">
+                        <label class="custom-file-label">Documento Frente</label>
+                    </div>
+                    <div class="custom-file">
+                        <input name="files" type="file" class="custom-file-input">
+                        <label class="custom-file-label">Documento Verso</label>
+                    </div>
+                    <div class="custom-file">
+                        <input name="files" type="file" class="custom-file-input">
+                        <label class="custom-file-label">Documento Atestado Médico</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Documentos</button>
+                </form>
+            </div>
+            <div id="senha" class="tab-pane fade">
+                <form class="form-inline" th:object="${Arbitro}" th:action="@{/cadastroSenha}" method="post">
+                    <div class="form-group">
+                        <label th:field="senha">Senha Antiga</label>
+                        <input type="text" class="form-control mx-sm-3">
+                    </div>
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label th:field="senha">Senha Nova</label>
+                            <input type="text" th:field="*{senha}" class="form-control mx-sm-3">
+                            <small id="passwordHelpInline" class="text-muted">
+                                Deve ter de  8-20 caracteres.
+                            </small>
+                        </div>
+
+                    </form>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Salvar Senha</button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+</html>
